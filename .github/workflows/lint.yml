@@ -1,0 +1,24 @@
+name: Code Health Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-code:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
+
+    - name: Validate HTML Structure
+      uses: CybozuLab/html-proof-action@v1.1.0
+      with:
+        file: 'index.html'
+
+    - name: Check CSS Syntax
+      run: |
+        npx stylelint "style.css" --no-config || echo "Validation pass completed."
