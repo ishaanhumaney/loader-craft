@@ -14,11 +14,13 @@ jobs:
     - name: Checkout Source Code
       uses: actions/checkout@v4
 
-    - name: Validate HTML Structure
-      uses: CybozuLab/html-proof-action@v1.1.0
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
       with:
-        file: 'index.html'
+        node-version: '20'
+
+    - name: Validate HTML Structure
+      run: npx htmlhint "index.html"
 
     - name: Check CSS Syntax
-      run: |
-        npx stylelint "style.css" --no-config || echo "Validation pass completed."
+      run: npx stylelint "style.css" --no-config || echo "Validation pass completed."
